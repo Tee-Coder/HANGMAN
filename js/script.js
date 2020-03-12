@@ -96,7 +96,7 @@ function Hangman() {
                 _this.lose();
             }
         } else {
-            alert("Guess already made. Need not enter previous guesses again, please");
+            alert("Duplicate guess letter cant be used! please change the letter");
         }
         //Check for Game Over
 
