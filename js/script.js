@@ -6,18 +6,13 @@ var gameController = {
     input: document.querySelector('[name="guess"]'),
     word: document.querySelector('.word'),
     chances: document.querySelector('.chances'),
-    previousGuesses: document.querySelector('.previous-guesses')
+    previousGuesses: document.querySelector('.previous-guesses'),
 }
 
 function Hangman() {
-    //Properties
+    // properties
     this.runGame = true;
-    this.words = [
-        'programming',
-        'test',
-        'Clayton',
-        'TECHCareers'
-    ];
+    this.words = ["apple", "pineapples", "apples", "kiwi", "peach", "bananas", "reserved", "pears", "mangoes", "Guava", "mountain", "hills", "valleys", "rivers", "streams", "lakes"];
     this.word = '';
     this.displayString = '';
     this.chances = maxChances;
@@ -27,88 +22,99 @@ function Hangman() {
     this.run = function () {
         this.setup();
         _this = this;
-        //We can add the event listener to the form instead fo the button because the button is type="submit"
-        gameController.form.addEventListener('submit', this.guessLetter);
+        gameController.form.addEventListener('submit', this.guessLetter); //We can add the event listener to the form instead of the button becauses the button is type="submit"
     };
 
     this.setup = function () {
-        //Reset the game back to a starting position
+        // Reset the game back to a strating position
         gameController.previousGuesses.innerHTML = '';
         this.previousGuesses = [];
         this.chances = maxChances;
         this.displayString = '';
-        //Get a new word
-        var i = Math.floor(Math.random() * this.words.length);//The floor() method rounds a number DOWNWARDS to the nearest integer, and returns the result.
+        // Get a new word
+        var i = Math.floor(Math.random() * this.words.length);
         this.word = this.words[i];
-
         //How do we display enough empty spaces
-        for (var i = 0; i < this.word.length; i++) this.displayString += '_';//for loops do not need {} braces IF we only have one line of code inside the loop. "this.dislayString += '_';" is actually INSIDE this loop.
+        for (var i = 0; i < this.word.length; i++) this.displayString += '_'; //for loops do need {} braces IF we only have 1 line of code inside the loop. "this.displayString += '_';" is actually INSDE THE LOOP
 
-        //get our values to show on screen
-        gameController.word.textContent = this.displayString;
-        gameController.chances.textContent = this.chances;
-        //get our values to show in console
+        gameController.word.textContent = this.displayString;// get our value to show on screen
+        gameController.chances.textContent = this.chances;// get our value to show on screen
+        // get our values to show in console
         console.log(this.word);
     };
 
+
     this.guessLetter = function (event) {
         event.preventDefault();
-        //Check if the guessed letter is in the word
-        if (_this.word.includes(gameController.input.value)) {
-            //Update the display string (showing the letters)
+        //Checked if the guessed lettr is in the word
+        var letterOfWord = gameController.input.value;
+        var lowerLetters = letterOfWord.toLowerCase();
+
+        _this.previousGuesses.push(lowerLetters);
+        
+        
+        if (_this.word.includes(lowerLetters)) {
+            
+            //Update the display string (showin the letters)
             for (var i = 0; i < _this.word.length; i++) {
-                //loop through each letter in our word, one-by-one
+                // Loop through each letter in our word, one by one
                 var currentChar = _this.word.substr(i, 1);
-                //If the current character matches what we have guessed
-                if (currentChar === gameController.input.value) {
+                //If he current chaacter matches what we have guessed
+                if (currentChar === lowerLetters) {
+                    _this.displayString = //Slice the pieces that we need
+                        _this.displayString.slice(0, i) +   // is grabbing al the underscores BEFORE our matched characters
+                        currentChar + //
+                        _this.displayString.slice(i + 1, _this.displayString.length);
 
-                    _this.displayString = //Slice the pieces that we need using .slice() https://www.w3schools.com/jsref/jsref_slice_array.asp
-                        _this.displayString.slice(0, i) + //is grabbing all the underscores BEFORE our matched character
-                        currentChar + //Concatenating in our current character which matches with our word.
-                        _this.displayString.slice(i + 1, _this.displayString.length);//is grabbing all the underscores AFTER our matched character
 
-                    //We still have to output our code to the browser
+                    // We still have to output our code to the browser
                     gameController.word.textContent = _this.displayString;
+                    
+                    
                 }
             }
 
-            //has the word been completely solved?
+
+            // Has the word been completely solved?
             if (!gameController.word.textContent.includes('_')) {
-                //Win!
+                // Wins
                 _this.win();
             }
         } else {
-            //Letter is not in word
+            // Letter is not in word
             //Burn one chance
             _this.chances--;
-            //Update user interface
+            //update user interface
             gameController.chances.textContent = _this.chances;
 
-            //Check for game over
-            if ( _this.chances == 0 ){
+            //Check for Game Over
+
+            if (_this.chances == 0) {
+                // Loses
                 _this.lose();
             }
         }
-        //Reset the input
         gameController.input.value = '';
+        gameController.previousGuesses.textContent = _this.previousGuesses;
+       
+
     };
 
-    //Win
-    this.win = function () {
-        if ( confirm('You win! Play again?') ) {
-            this.setup();
-        }
-    };
+     this.win() = function () {
+         if (confirm('You Win! Play again?')) {
+             this.setup();
+         }
+     };
 
-    //Lose
-    this.lose = function () {
-        if ( confirm('You lose! Play again?') ) {
-            this.setup();
-        }
-    };
+
+     this.lose() = function () {
+         if (confirm('You lose! Play again?')) {
+             this.setup();
+         }
+     };
+
 };
-
 
 //END OF FILE
 var game = new Hangman();
-game.run();;
+game.run();
