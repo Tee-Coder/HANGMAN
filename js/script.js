@@ -107,13 +107,13 @@ function Hangman() {
 
 
     this.win = function () {
-        if (confirm('Congratulations!! You Win! Do You Wish to Play again?')) {
+        if (confirm(' You Win! Replay?')) {
             this.setup();
         }
     };
 
     this.lose = function () {
-        if (confirm('Sorry, You lose! Play again?')) {
+        if (confirm('OOps, You lose! Replay?')) {
             this.setup();
         }
     };
