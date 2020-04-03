@@ -1,5 +1,5 @@
 var _this;
-var maxChances = 6;
+var maxChances= 6;
 
 var gameController = {
     form: document.querySelector('form'),
@@ -9,7 +9,45 @@ var gameController = {
     previousGuesses: document.querySelector('.previous-guesses'),
 }
 
-function Hangman() {
+class HangingMan
+{
+    runGame:boolean 
+    words: string[];
+    word: any;
+    displayString:any;
+    chances:number;
+    previousGuesses: string;
+
+    constructor(runGame:boolean, words:string, word:any, displayString:any, chances:number, previousGuesses:string)
+    {
+        this.runGame = runGame;
+        this.word = words;
+        this.word = word;
+        this.displayString = displayString;
+        this.chances= chances;
+        this.previousGuesses = previousGuesses
+    }
+/*
+    this.setup = function () {
+        // Reset the game back to a strating position
+        gameController.previousGuesses.innerHTML = '';
+        this.previousGuesses = [];
+        this.chances = maxChances;
+        this.displayString = '';
+        // Get a new word
+        var i = Math.floor(Math.random() * this.words.length);
+        this.word = this.words[i];
+        //How do we display enough empty spaces
+        for (var i = 0; i < this.word.length; i++) this.displayString += '_'; //for loops do need {} braces IF we only have 1 line of code inside the loop. "this.displayString += '_';" is actually INSDE THE LOOP
+
+        gameController.word.textContent = this.displayString;// get our value to show on screen
+        gameController.chances.textContent = this.chances;// get our value to show on screen
+        // get our values to show in console
+        console.log(this.word);
+    };
+    */
+}
+/*function Hangman() {
     // properties
     this.runGame = true;
     this.words = ["TechCareer", "Teachers", "Students", "Computer", "Software", "Tech"];
@@ -47,8 +85,8 @@ function Hangman() {
     this.guessLetter = function (event) {
         event.preventDefault();
         //Checked if the guessed lettr is in the word
-        var letterOfWord = gameController.input.value;
-        var lowerLetters = letterOfWord.toLowerCase();
+        let letterOfWord = gameController.input.value;
+         lowerLetters = letterOfWord.toLowerCase();
 
         var check = _this.previousGuesses.find(function (element) { return element === lowerLetters; });
         console.log(check);
@@ -119,7 +157,7 @@ function Hangman() {
     };
 };
 
-
+*/
 
 //END OF FILE
 var game = new Hangman();
